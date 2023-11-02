@@ -11,47 +11,49 @@ function getAllTeams() {
 }
 
 function init() {
-  const selectButton = document.getElementById("selectButton");
-  selectButton.onclick = buttonClicked;
+  //   const selectButton = document.getElementById("selectButton");
+  //   selectButton.onclick = buttonClicked;
+
 
   populateTeams();
 }
 
-function findTeamByCode(code){
-    const teams = getAllTeams();
-    for(let team of teams){
-        if(team.code === code){
-            return team
-        }
+function findTeamByCode(code) {
+  const teams = getAllTeams();
+  for (let team of teams) {
+    if (team.code === code) {
+      return team;
     }
+  }
 }
 
-function buttonClicked(event) {
+function selectionChanged(event) {
   event.preventDefault();
-  
+
   // find the select list
-  const teamsList = document.getElementById("teamsList")
+  const teamsList = document.getElementById("teamsList");
 
-  // get the selected team code 
-  const teamCode = teamsList.value
+  // get the selected team code
+  const teamCode = teamsList.value;
 
-  // find the team with that id 
-  const selectedTeam = findTeamByCode(teamCode)
+  // find the team with that id
+  const selectedTeam = findTeamByCode(teamCode);
 
-  // display all team information 
-  document.getElementById('teamName').innerText = `The team ${selectedTeam.name} stadium is located in ${selectedTeam.plays}`
+  // display all team information
+  document.getElementById(
+    "teamName"
+  ).innerText = `The team ${selectedTeam.name} stadium is located in ${selectedTeam.plays}`;
 }
 
 function populateTeams() {
   const teamsList = document.getElementById("teamsList");
   const teams = getAllTeams();
 
-  for(let team of teams){
-    // creates new option element
-      const option = new Option(team.name, team.code)
-      teamsList.appendChild(option)
-      
+    teamsList.onchange = selectionChanged
 
+  for (let team of teams) {
+    // creates new option element
+    const option = new Option(team.name, team.code);
+    teamsList.appendChild(option);
   }
 }
-
